@@ -1,6 +1,11 @@
 Sankirtanam::Application.routes.draw do
+  get "welcome/index"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  
+  scope "(:locale)", locale: /en|ru/ do
+    root 'welcome#index'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
