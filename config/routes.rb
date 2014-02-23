@@ -5,6 +5,7 @@ Sankirtanam::Application.routes.draw do
   
   scope "(:locale)", locale: /en|ru/ do
     root 'welcome#index'
+    get 'p' => 'welcome#process_emails'
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
