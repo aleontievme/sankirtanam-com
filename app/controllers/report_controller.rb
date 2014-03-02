@@ -4,6 +4,6 @@ class ReportController < ApplicationController
   end
 
   def show
-  	@report = Report.find_by_location_id(params[:location_id])
+  	@reports = Report.includes(:records).where(location_id: params[:location_id])
   end
 end

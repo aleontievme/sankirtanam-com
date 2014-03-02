@@ -1,2 +1,46 @@
-<h1>Report#show</h1>
-<p>Find me in app/views/report/show.html.erb</p>
+
+  <% for report in @reports do %>
+    <% sum = summary(report) %>
+
+    <h1>
+      <%= report.location.name %>, <%= report.date %>
+    </h1>
+    
+    <table>
+      <tr>
+        <th><%=t("report.distributor")%></th>
+        <th><%=t("report.mahabig")%></th>
+        <th><%=t("report.big")%></th>
+        <th><%=t("report.medium")%></th>
+        <th><%=t("report.small")%></th>
+        <th><%=t("report.journal")%></th>
+        <th><%=t("report.quantity")%></th>
+        <th><%=t("report.scores")%></th>
+      </tr>
+
+      <tr>
+      	<td><%=t("report.summary")%></td>
+        <td><%= sum[:mahabig] %></td>
+        <td><%= sum[:big] %></td>
+        <td><%= sum[:medium] %></td>
+        <td><%= sum[:small] %></td>
+        <td><%= sum[:journal] %></td>
+        <td><%= sum[:quantity] %></td>
+        <td><%= sum[:points] %></td>
+      </tr>
+      
+      
+      <% for record in report.records %>
+        <tr>
+          <td><%= record.distributor %></td>
+          <td><%= record.mahabig %></td>
+          <td><%= record.big %></td>
+          <td><%= record.medium %></td>
+          <td><%= record.small %></td>
+          <td><%= record.journal %></td>
+          <td><%= quantity(record) %></td>
+          <td><%= points(record) %></td>
+        </tr>
+      <% end %>      
+    </table> 
+  <% end %>
