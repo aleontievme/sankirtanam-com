@@ -1,0 +1,12 @@
+<%= form_tag("/report/show", method: "get") do %>
+  <%= label_tag(:date_start, "From:") %>
+  <%= text_field_tag(:date_start) %>
+  
+  <%= label_tag(:date_end, "To:") %>
+  <%= text_field_tag(:date_end) %>
+  
+  <%= label_tag(:location, "location:") %>
+  <%= select_tag(:location_id, options_from_collection_for_select(@locations, :id, :name)) %>
+  
+  <%= submit_tag("Search") %>
+<% end %>
