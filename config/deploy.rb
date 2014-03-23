@@ -22,8 +22,8 @@ task :copy_database_config, roles => :app do
   run "cp #{db_config} #{release_path}/config/database.yml"
 end
 
-after "deploy:update_code", :copy_database_config
-task :copy_database_config, roles => :app do
+after "deploy:update_code", :copy_secret_token
+task :copy_secret_token, roles => :app do
   db_config = "#{shared_path}/secret_token.rb"
   run "cp #{db_config} #{release_path}/config/initializers/secret_token.rb"
 end
