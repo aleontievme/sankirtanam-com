@@ -31,3 +31,7 @@ ru:
     quantity: Количество
     scores: Очки
     summary: Итог
+    date_start: С
+    date_end: По
+    location: Локация
+    search: Искать
