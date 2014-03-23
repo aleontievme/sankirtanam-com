@@ -12,7 +12,7 @@ module ReportHelper
     record.big     * 100 + 
     record.medium  * 50 + 
     record.small   * 25 + 
-    record.journal * 20 	
+    record.journal * 20
   end
 
   def summary(report)
@@ -27,5 +27,9 @@ module ReportHelper
       result[:points]  += points(record)
     end
     result
+  end
+
+  def records(report)
+    report.records.sort_by{|x| points(x)}.reverse
   end  
 end

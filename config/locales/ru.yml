@@ -20,4 +20,14 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 ru:
-  hello: "Добро пожаловать"
+  report:
+    not_found: Ничего не найдено
+    distributor: Имя
+    mahabig: Махабиги
+    big: Биги
+    medium: Средние
+    small: Маленькие
+    journal: Журналы
+    quantity: Количество
+    scores: Очки
+    summary: Итог

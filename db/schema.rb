@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140223134839) do
+ActiveRecord::Schema.define(version: 20140323080031) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20140223134839) do
   create_table "reports", force: true do |t|
     t.date    "date"
     t.integer "location_id"
+    t.string  "permalink"
   end
 
   add_index "reports", ["location_id"], name: "index_reports_on_location_id"

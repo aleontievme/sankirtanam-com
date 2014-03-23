@@ -2,6 +2,7 @@ require 'net/pop'
 
 class WelcomeController < ApplicationController
   def index
+  	@locations = Location.all
   end
   
   def process_emails

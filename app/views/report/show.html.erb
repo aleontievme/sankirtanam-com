@@ -1,4 +1,4 @@
-
+<% if @reports.length > 0 then %>
   <% for report in @reports do %>
     <% sum = summary(report) %>
 
@@ -6,7 +6,7 @@
       <%= report.location.name %>, <%= report.date %>
     </h1>
     
-    <table>
+    <table class="table table-striped">
       <tr>
         <th><%=t("report.distributor")%></th>
         <th><%=t("report.mahabig")%></th>
@@ -18,19 +18,7 @@
         <th><%=t("report.scores")%></th>
       </tr>
 
-      <tr>
-      	<td><%=t("report.summary")%></td>
-        <td><%= sum[:mahabig] %></td>
-        <td><%= sum[:big] %></td>
-        <td><%= sum[:medium] %></td>
-        <td><%= sum[:small] %></td>
-        <td><%= sum[:journal] %></td>
-        <td><%= sum[:quantity] %></td>
-        <td><%= sum[:points] %></td>
-      </tr>
-      
-      
-      <% for record in report.records %>
+      <% for record in records(report) %>
         <tr>
           <td><%= record.distributor %></td>
           <td><%= record.mahabig %></td>
@@ -41,6 +29,20 @@
           <td><%= quantity(record) %></td>
           <td><%= points(record) %></td>
         </tr>
-      <% end %>      
+      <% end %>  
+
+      <tr class="info">
+        <td><%=t("report.summary")%></td>
+        <td><%= sum[:mahabig] %></td>
+        <td><%= sum[:big] %></td>
+        <td><%= sum[:medium] %></td>
+        <td><%= sum[:small] %></td>
+        <td><%= sum[:journal] %></td>
+        <td><%= sum[:quantity] %></td>
+        <td><%= sum[:points] %></td>
+      </tr>    
     </table> 
   <% end %>
+<% else %>
+  <%= t("report.not_found") %>
+<% end %>
