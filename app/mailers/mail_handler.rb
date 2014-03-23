@@ -14,6 +14,11 @@ class MailHandler < ActionMailer::Base
     location = Location.find_by_email(email.from)
     date = DateTime.now
 
+    if location == nil
+      ProcessingReportMailer.failed_location_not_found(email.from).deliver
+      return
+    end
+
     return if Report.find_by_permalink(permalink)
 
     report = Report.new
