@@ -24,33 +24,33 @@ module ReportHelper
         result[:mahabig] += record.mahabig
       rescue
       end
-      
+
       begin
         result[:big]     += record.big
       rescue
       end
-      
+
       begin
         result[:medium]  += record.medium
       rescue
       end
-      
+
       begin
         result[:small]   += record.small
       rescue
       end
-      
+
       begin
         result[:quantity]+= quantity(record)
       rescue
       end
-      
+
       begin
         result[:points]  += points(record)
-    enrescue
-  end
-  
-    d
+      rescue
+      end
+      
+    end
     result
   end
 
