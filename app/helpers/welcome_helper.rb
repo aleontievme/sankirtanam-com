@@ -12,13 +12,9 @@ module WelcomeHelper
   end
 
   def quantity(record)
-    begin
-      record.mahabig + 
-      record.big + 
-      record.medium + 
-      record.small
-    rescue
-      0
-    end
+    record.mahabig || 0+ 
+    record.big || 0 + 
+    record.medium || 0 + 
+    record.small || 0
   end
 end
