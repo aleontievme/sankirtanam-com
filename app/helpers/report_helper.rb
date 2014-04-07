@@ -20,13 +20,37 @@ module ReportHelper
   def summary(report)
     result = {mahabig:0, big:0, medium:0, small:0, journal:0, quantity:0, points:0}
     for record in report.records
-      result[:mahabig] += record.mahabig
-      result[:big]     += record.big
-      result[:medium]  += record.medium
-      result[:small]   += record.small
-      result[:quantity]+= quantity(record)
-      result[:points]  += points(record)
-    end
+      begin
+        result[:mahabig] += record.mahabig
+      rescue
+      end
+      
+      begin
+        result[:big]     += record.big
+      rescue
+      end
+      
+      begin
+        result[:medium]  += record.medium
+      rescue
+      end
+      
+      begin
+        result[:small]   += record.small
+      rescue
+      end
+      
+      begin
+        result[:quantity]+= quantity(record)
+      rescue
+      end
+      
+      begin
+        result[:points]  += points(record)
+    enrescue
+  end
+  
+    d
     result
   end
 
