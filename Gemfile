@@ -48,6 +48,9 @@ gem 'capistrano', group: :development
 gem 'squeel'
 gem 'roo'
 gem 'rubyzip', '< 1.0.0'
+gem "iconv", "~> 1.0.3" #added this in your Gemfile
+
+
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
