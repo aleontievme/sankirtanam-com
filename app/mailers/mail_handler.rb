@@ -41,8 +41,13 @@ class MailHandler < ActionMailer::Base
       return
     end
 
-    date = Date.strptime(email.subject, "%d/%m/%Y")
-    if date.nil?
+    begin
+      date = Date.strptime(email.subject, "%d/%m/%Y")
+      if date.nil?
+        ProcessingReportMailer.failed(email.from, 'Wrong date in subject. Use dd/mm/yyyy format').deliver
+        return
+      end
+    rescue
       ProcessingReportMailer.failed(email.from, 'Wrong date in subject. Use dd/mm/yyyy format').deliver
       return
     end
