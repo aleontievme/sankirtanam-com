@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require chart
 
 $(document).ready(function() {
   $('.datepicker').datepicker();

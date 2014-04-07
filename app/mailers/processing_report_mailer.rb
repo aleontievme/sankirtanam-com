@@ -5,7 +5,7 @@ class ProcessingReportMailer < ActionMailer::Base
     mail(to: to, subject: 'Ok')
   end
 
-  def failed(to)
-  	mail(to: to, subject: 'Failed')
+  def failed(to, body)
+  	mail(to: to, subject: 'Failed', body: body)
   end
 end
