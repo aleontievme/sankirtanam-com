@@ -4,8 +4,8 @@ class ReportController < ApplicationController
   end
 
   def show
-    date_start = Time.strptime(params[:date_start], "%m/%d/%Y")
-    date_end   = Time.strptime(params[:date_end], "%m/%d/%Y")
+    date_start = Time.strptime(params[:date_start], "%m/%d/%Y") rescue DateTime.new(1000, 1, 1)
+    date_end   = Time.strptime(params[:date_end], "%m/%d/%Y") rescue DateTime.new(3000, 1, 1)
 
   	@reports = Report.includes(:records)
   	  .where(location_id: params[:location_id])

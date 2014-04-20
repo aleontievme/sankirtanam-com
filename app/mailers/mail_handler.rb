@@ -6,6 +6,42 @@ require 'rubygems'
 require 'roo'
 
 class MailHandler < ActionMailer::Base
+  
+  def receive(email)
+    permalink = Digest::SHA1.hexdigest (email.from.to_s + email.date.to_s)
+    subject   = email.subject
+
+    # email already processed
+    #if Report.find_by_permalink(permalink) then return end
+
+    # check for errors
+    begin
+      date     = find_date(email)
+      location = find_location(email)
+
+      if location == nil then raise "Location not found" end
+      if date == nil then raise "Date not set" end
+
+      process_email(email, permalink, date, location)
+      ProcessingReportMailer.succesful(email.from).deliver
+    rescue RuntimeError => ex
+      ProcessingReportMailer.failed(email.from, "#{ex.message}").deliver
+    end
+  end
+
+
+
+  def find_date(email)
+    subject = email.subject
+    date_token = subject.split(" ")[0]
+    Date.strptime(date_token, "%d/%m/%Y")
+  end
+
+  def find_location(email)
+    subject = email.subject
+    location_token = subject.split(" ")[1]
+    Location.find_by_name(location_token)
+  end
 
   def open_spreadsheet(file)
     tempfile = File.new("#{Rails.root.to_s}/tmp/#{file.filename}", "w+")
@@ -18,46 +54,13 @@ class MailHandler < ActionMailer::Base
     when '.xlsx' then Excelx.new(tempfile.path, nil, :ignore)
     else raise "Unknown file type: #{file.original_filename}"
     end
-  end  
+  end
 
-
-  def receive(email)
-    permalink = Digest::SHA1.hexdigest (email.from.to_s+email.date.to_s)
-    location  = Location.find_by_email(email.from)
-
-    # check for errors
-
-    if location == nil
-      ProcessingReportMailer.failed(email.from, 'Location not found').deliver
-      return
-    end
-
-    if Report.find_by_permalink(permalink)
-      #return
-    end
-
-    if email.subject.nil?
-      ProcessingReportMailer.failed(email.from, 'No data set in subject. Use dd/mm/yyyy format').deliver
-      return
-    end
-
-    begin
-      date = Date.strptime(email.subject, "%d/%m/%Y")
-      if date.nil?
-        ProcessingReportMailer.failed(email.from, 'Wrong date in subject. Use dd/mm/yyyy format').deliver
-        return
-      end
-    rescue
-      ProcessingReportMailer.failed(email.from, 'Wrong date in subject. Use dd/mm/yyyy format').deliver
-      return
-    end
-
-    # process attachments
-
+  def process_email(email, permalink, date, location)
     email.attachments.each{ |file|
       report = Report.new
       report.permalink = permalink
-      report.date      = date #todo
+      report.date      = date
       report.location  = location
       report.save
 
@@ -67,68 +70,15 @@ class MailHandler < ActionMailer::Base
         row = Hash[[header, spreadsheet.row(i)].transpose]
 
         record = Record.new()
-        record.distributor = row["name"]
-        record.mahabig = row["mahabig"]
-        record.big = row["big"]
-        record.medium = row["medium"]
-        record.small = row["small"]
+        record.distributor = row["name"] || row["имя"]
+        record.mahabig = row["mahabig"] || row["Махабиги"]
+        record.big = row["big"] || row["Большие"]
+        record.medium = row["medium"] || row["Средние"]
+        record.small = row["small"] || row["Малые"]
         report.records << record
         record.save
       end
     }
+  end  
 
-    return 
-
-
-    #return if email.body.to_s.nil?
-    #body = email.body.to_s.force_encoding("UTF-8") # encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '??')
-
-    #if not body.valid_encoding?
-    #  ProcessingReportMailer.failed(email.from).deliver
-    #  return
-    #end
-    #permalink = Digest::SHA1.hexdigest (email.from.to_s+email.date.to_s)
-    #location  = Location.find_by_email(email.from)
-    #date      = DateTime.now
-
-    
-
-    
-    #return if Report.find_by_permalink(permalink)
-
-    #report = Report.new
-    #report.permalink = permalink
-    #report.date      = date #todo
-    #report.location  = location
-    #report.save
-
-
-    body.to_s.split(/\r?\n/).each { |line|
-      name = line.split(":")[0]
-      if !name.nil?
-        values = line.split(":")[1]
-        name   = name
-
-        if values
-          q = values.split(",")
-          #puts "++++ #{name}: mahabig:#{q[0]} big:#{q[1]} medium:#{q[2]} small:#{q[3]} journals:#{q[4]}"
-          record = Record.new()
-          record.distributor = name.force_encoding("UTF-8")
-          record.mahabig = q[0].strip
-          record.big = q[1].strip
-          record.medium = q[2].strip
-          record.small = q[3].strip
-          #record.journal = q[4].strip
-          report.records << record
-          record.save
-        end  
-      end 
-    }
-
-    ProcessingReportMailer.succesfully_processed(email.from).deliver
-    
-    # here you will have an email object and will be able to call methods like
-    # email.subject and email.attachments
-    # puts "from: #{email.from}, subject: '#{email.subject}', body: '#{email.body}'"
-  end
 end

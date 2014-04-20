@@ -3,7 +3,7 @@ module WelcomeHelper
   	result  = {0 => 0}
     records = Record.joins{report}
     for record in records
-      month = record.report.date.month
+      month = record.report.date.month - 1
       cur   = result[month]
       result[month] = 0 if cur.nil?
       result[month] += quantity(record)

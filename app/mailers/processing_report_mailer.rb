@@ -1,7 +1,7 @@
 class ProcessingReportMailer < ActionMailer::Base
   default from: "sankirtanam@aleontiev.me"
 
-  def succesfully_processed(to)
+  def succesful(to)
     mail(to: to, subject: 'Ok')
   end
 
