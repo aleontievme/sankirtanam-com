@@ -19,7 +19,7 @@ class MailHandler < ActionMailer::Base
       date     = find_date(email)
       location = find_location(email)
 
-      if location == nil then raise "Location not found" end
+      if location == nil then raise "Location '#{location}' not found" end
       if date == nil then raise "Date not set" end
 
       process_email(email, permalink, date, location)
