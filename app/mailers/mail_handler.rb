@@ -16,10 +16,11 @@ class MailHandler < ActionMailer::Base
 
     # check for errors
     begin
-      date     = find_date(email)
-      location = find_location(email)
+      date          = find_date(email)
+      location_name = find_location_name(email)
+      location      = find_location(email)
 
-      if location == nil then raise "Location '#{location}' not found" end
+      if location == nil then raise "Location '#{location_name}' not found" end
       if date == nil then raise "Date not set" end
 
       process_email(email, permalink, date, location)
@@ -38,6 +39,10 @@ class MailHandler < ActionMailer::Base
   end
 
   def find_location(email)
+    Location.find_by_name(find_location_name(email))
+  end
+
+  def find_location_name(email)
     subject = email.subject
     location_token = subject.split(" ")[1]
     Location.find_by_name(location_token)

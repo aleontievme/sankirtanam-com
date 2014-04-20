@@ -6,16 +6,18 @@
       <%= report.location.name %>, <%= report.date %>
     </h1>
     
-    <table class="table table-striped">
-      <tr>
-        <th><%=t("report.distributor")%></th>
-        <th><%=t("report.mahabig")%></th>
-        <th><%=t("report.big")%></th>
-        <th><%=t("report.medium")%></th>
-        <th><%=t("report.small")%></th>
-        <th><%=t("report.quantity")%></th>
-        <th><%=t("report.scores")%></th>
-      </tr>
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th><%=t("report.distributor")%></th>
+          <th><%=t("report.mahabig")%></th>
+          <th><%=t("report.big")%></th>
+          <th><%=t("report.medium")%></th>
+          <th><%=t("report.small")%></th>
+          <th><%=t("report.quantity")%></th>
+          <th><%=t("report.scores")%></th>
+        </tr>
+      </thead>
 
       <% for record in records(report) %>
         <tr>
@@ -37,7 +39,19 @@
         <td><%= sum[:small] %></td>
         <td><%= sum[:quantity] %></td>
         <td><%= sum[:points] %></td>
-      </tr>    
+      </tr>
+
+      <tfoot>
+        <tr class="info">
+          <td></td>
+          <td><%=t("report.mahabig")%></td>
+          <td><%=t("report.big")%></td>
+          <td><%=t("report.medium")%></td>
+          <td><%=t("report.small")%></td>
+          <td><%=t("report.quantity")%></td>
+          <td><%=t("report.scores")%></td>
+        </tr>
+      </tfoot>   
     </table> 
   <% end %>
 <% else %>
