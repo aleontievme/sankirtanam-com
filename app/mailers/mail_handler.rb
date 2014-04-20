@@ -12,7 +12,7 @@ class MailHandler < ActionMailer::Base
     subject   = email.subject
 
     # email already processed
-    #if Report.find_by_permalink(permalink) then return end
+    if Report.find_by_permalink(permalink) then return end
 
     # check for errors
     begin
