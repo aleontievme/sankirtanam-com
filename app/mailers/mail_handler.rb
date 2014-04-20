@@ -45,7 +45,7 @@ class MailHandler < ActionMailer::Base
   def find_location_name(email)
     subject = email.subject
     location_token = subject.split(" ")[1]
-    Location.find_by_name(location_token)
+    Location.where{name =~ "%" + location_token + "%"}
   end
 
   def open_spreadsheet(file)
