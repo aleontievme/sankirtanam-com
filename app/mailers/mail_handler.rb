@@ -49,7 +49,8 @@ class MailHandler < ActionMailer::Base
   end
 
   def find_location_name(email)
-    email.subject[s.index(" ")+1..-1]
+    subj = email.subject
+    subj[subj.index(" ")+1..-1]
   end
 
   def open_spreadsheet(file)
