@@ -9,8 +9,8 @@ module ReportHelper
   def points(record)
     (record.mahabig || 0) * 2 + 
     (record.big || 0)     * 1 + 
-    (record.medium || 0)  * .5 + 
-    (record.small || 0)   * .25
+    (record.medium || 0)  * 0.5 + 
+    (record.small || 0)   * 0.25
   end
 
   def summary(report)

@@ -44,7 +44,8 @@ class MailHandler < ActionMailer::Base
   end
 
   def find_location(email)
-    Location.where{name =~ find_location_name(email)}.to_a[0]
+    location_name = find_location_name(email)
+    Location.where{name =~ location_name}.to_a[0]
   end
 
   def find_location_name(email)
