@@ -7,10 +7,10 @@ module ReportHelper
   end
 
   def points(record)
-    (record.mahabig || 0) * 200 + 
-    (record.big || 0)     * 100 + 
-    (record.medium || 0)  * 50 + 
-    (record.small || 0)   * 25
+    (record.mahabig || 0) * 2 + 
+    (record.big || 0)     * 1 + 
+    (record.medium || 0)  * .5 + 
+    (record.small || 0)   * .25
   end
 
   def summary(report)

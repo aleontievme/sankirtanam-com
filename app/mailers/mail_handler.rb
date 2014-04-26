@@ -26,6 +26,7 @@ class MailHandler < ActionMailer::Base
       process_email(email, permalink, date, location)
       ProcessingReportMailer.succesful(email.from).deliver
     rescue RuntimeError => ex
+      puts ex.message
       ProcessingReportMailer.failed(email.from, "#{ex.message}").deliver
     end
   end
@@ -33,19 +34,21 @@ class MailHandler < ActionMailer::Base
 
 
   def find_date(email)
-    subject = email.subject
-    date_token = subject.split(" ")[0]
-    Date.strptime(date_token, "%d/%m/%Y")
+    begin
+      subject = email.subject
+      date_token = subject.split(" ")[0]
+      Date.strptime(date_token, "%d/%m/%Y")
+    rescue
+      nil
+    end
   end
 
   def find_location(email)
-    Location.find_by_name(find_location_name(email))
+    Location.where{name =~ find_location_name(email)}.to_a[0]
   end
 
   def find_location_name(email)
-    subject = email.subject
-    location_token = subject.split(" ")[1]
-    Location.where{name =~ "%" + location_token + "%"}
+    email.subject.split(" ")[1]
   end
 
   def open_spreadsheet(file)
