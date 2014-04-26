@@ -1,16 +1,16 @@
 module ReportHelper
   def quantity(record)
-    record.mahabig || 0 + 
-    record.big || 0 + 
-    record.medium || 0 + 
-    record.small || 0
+    (record.mahabig || 0) + 
+    (record.big     || 0) + 
+    (record.medium  || 0) + 
+    (record.small   || 0)
   end
 
   def points(record)
     (record.mahabig || 0) * 2 + 
-    (record.big || 0)     * 1 + 
-    (record.medium || 0)  * 0.5 + 
-    (record.small || 0)   * 0.25
+    (record.big     || 0) * 1 + 
+    (record.medium  || 0) * 0.5 + 
+    (record.small   || 0) * 0.25
   end
 
   def summary(report)

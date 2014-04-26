@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 ru:
+  date:
+    formats:
+      long: '%d.%m.%Y'
   report:
     not_found: Ничего не найдено
     distributor: Имя
