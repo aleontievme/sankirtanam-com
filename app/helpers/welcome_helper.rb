@@ -3,7 +3,7 @@ module WelcomeHelper
   	result  = {}
     records = Record.joins{report}
     for record in records
-      location = record.report.location.name
+      location = record.report.location.short_name
       cur   = result[location]
       result[location] = 0 if cur.nil?
       result[location] += quantity(record)
