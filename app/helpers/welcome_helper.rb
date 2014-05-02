@@ -12,7 +12,7 @@ module WelcomeHelper
       end
     end
 
-    result.sort_by {|key, value| value}
+    result.sort_by {|key, value| -value} # and reverse to 
   end
 
   def quantity(record)
