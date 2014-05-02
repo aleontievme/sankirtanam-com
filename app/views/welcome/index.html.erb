@@ -1,19 +1,34 @@
 <div id="container" height="450"></div>
-<%= render partial: "report/form", :locals => {locations: @locations} %>
+
+<table class="table">
+  <% for location in @locations %>
+    <tr>
+      <td><%=location.name%></td>
+      <% for i in 0..11 %>
+        <% if @city_month_stat[location] == nil then %>
+          <td></td>
+        <% else %>
+          <td><%= @city_month_stat[location][i] %></td>
+        <% end %>
+      <% end %>
+      <tr>
+  <% end %>
+</table>
+
 
 <script type="text/javascript">
 $(function () {
   <% charts = chart() %>
   $('#container').highcharts({
     chart: { type: 'column' },
-    title: { text: 'Статистика по городам' },
+    title: { text: 'Статистика по городам за <%=@year%> год' },
     xAxis: {
       type: 'category',
       labels: {
         rotation: -45,
         align: 'right',
         style: {
-          fontSize: '13px',
+          fontSize: '10px',
           fontFamily: 'Verdana, sans-serif'
         }
       }
@@ -30,4 +45,7 @@ $(function () {
     }]
   });
 });
-</script>
+</script
+
+
+<%= render partial: "report/form", :locals => {locations: @locations} %>
