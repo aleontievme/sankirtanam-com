@@ -1,34 +1,52 @@
-<div class="jumbotron">
-  <div class="row">
-  	<div class="col-md-5">
-  		<canvas id="myChart" width="400" height="300"></canvas>
-  	</div>
-    
-    <div class="col-md-7">
-    	<%= render partial: "report/form", :locals => {locations: @locations}%>
-    </div>
-  </div>
-</div>
+<div id="container" height="450"></div>
+<%= render partial: "report/form", :locals => {locations: @locations} %>
 
 <script type="text/javascript">
-	<% ch = chart() %>
-	var ctx = document.getElementById("myChart").getContext("2d");
-	var myNewChart = new Chart(ctx).Line({
-		labels: [ "", "", "", "", "", "", "", "", "", "", "", ""],
-		datasets: [
-			{ data: [
-				'<%= ch[0] %>',
-				'<%= ch[1] %>',
-				'<%= ch[2] %>',
-				'<%= ch[3] %>',
-				'<%= ch[4] %>',
-				'<%= ch[5] %>',
-				'<%= ch[6] %>',
-				'<%= ch[7] %>',
-				'<%= ch[8] %>',
-				'<%= ch[9] %>',
-				'<%= ch[10] %>',
-				'<%= ch[11] %>'] }
-		]
-	});
+$(function () {
+  <% charts = chart() %>
+  $('#container').highcharts({
+    chart: { type: 'column' },
+    title: { text: 'Статистика по городам' },
+    //subtitle: {
+    //  text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+    //},
+    xAxis: {
+      type: 'category',
+      labels: {
+        rotation: -45,
+        align: 'right',
+        style: {
+          fontSize: '13px',
+          fontFamily: 'Verdana, sans-serif'
+        }
+      }
+    },
+    yAxis: { min: 0, title: { text: 'Очки' } },
+    legend: { enabled: false },
+    //tooltip: {
+    //  pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>',
+    //},
+    series: [{
+      name: 'Population',
+      data: [
+        <% charts.each do |key, value| %>
+          ['<%=key%>', <%=value%>],
+        <% end %>
+      ],
+      dataLabels: {
+        enabled: true,
+        rotation: -90,
+        color: '#FFFFFF',
+        align: 'right',
+        x: 4,
+        y: 10,
+        style: {
+          fontSize: '13px',
+          fontFamily: 'Verdana, sans-serif',
+          textShadow: '0 0 3px black'
+        }
+      }
+    }]
+  });
+});
 </script>

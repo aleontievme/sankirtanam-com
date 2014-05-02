@@ -1,12 +1,12 @@
 module WelcomeHelper
   def chart()
-  	result  = {0 => 0}
+  	result  = {}
     records = Record.joins{report}
     for record in records
-      month = record.report.date.month - 1
-      cur   = result[month]
-      result[month] = 0 if cur.nil?
-      result[month] += quantity(record)
+      location = record.report.location.name
+      cur   = result[location]
+      result[location] = 0 if cur.nil?
+      result[location] += quantity(record)
     end
     result
   end
