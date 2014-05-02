@@ -2,7 +2,7 @@ module WelcomeHelper
   def chart()
   	result     = {}
     year_start = DateTime.new(DateTime.now.year)
-    reports    = Report.includes(:location,:records).where{date >= year_start}
+    reports    = Report.includes(:location, :records).where{date >= year_start}
     for report in reports
       location = report.location.short_name
       result[location] = 0 if result[location].nil?

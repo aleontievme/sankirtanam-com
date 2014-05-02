@@ -1,6 +1,23 @@
 <div id="container" height="450"></div>
 
-<table class="table">
+<table class="table table-condensed table-bordered">
+  <tr>
+    <th>Локация</th>
+    <th>ЯНВ</th>
+    <th>ФЕВ</th>
+    <th>МАР</th>
+    <th>АПР</th>
+    <th>МАЙ</th>
+    <th>ИЮН</th>
+    <th>ИЮЛ</th>
+    <th>АВГ</th>
+    <th>СЕН</th>
+    <th>ОКТ</th>
+    <th>НОЯ</th>
+    <th>ДЕК</th>
+    <th>ИТОГ</th>
+  </tr>
+
   <% for location in @locations %>
     <tr>
       <td><%=location.name%></td>
@@ -11,7 +28,13 @@
           <td><%= @city_month_stat[location][i] %></td>
         <% end %>
       <% end %>
-      <tr>
+      
+      <% if @city_month_stat[location] != nil then %>
+        <td><%=@city_month_stat[location][-1]%></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <tr>
   <% end %>
 </table>
 
