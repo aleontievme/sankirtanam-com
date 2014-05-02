@@ -1,14 +1,18 @@
 module WelcomeHelper
   def chart()
-  	result  = {}
-    records = Record.joins{report}
-    for record in records
-      location = record.report.location.short_name
-      cur   = result[location]
-      result[location] = 0 if cur.nil?
-      result[location] += quantity(record)
+  	result     = {}
+    year_start = DateTime.new(DateTime.now.year)
+    reports    = Report.includes(:location,:records).where{date >= year_start}
+    for report in reports
+      location = report.location.short_name
+      result[location] = 0 if result[location].nil?
+
+      for record in report.records
+        result[location] += quantity(record)
+      end
     end
-    result
+
+    result.sort_by {|key, value| value}
   end
 
   def quantity(record)
