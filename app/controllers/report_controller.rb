@@ -8,7 +8,7 @@ class ReportController < ApplicationController
     date_begin = DateTime.new(year)
     date_end   = DateTime.new(year, 12, 31)
 
-    location   = Location.find_by(short_name: params[:location]) 
+    location   = Location.find_by(permalink: params[:location]) 
 
   	@reports = Report.includes(:records)
   	  .where(location_id: location.id)

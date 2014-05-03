@@ -20,7 +20,7 @@
 
   <% @city_month_stat.each do |location, value| %>
     <tr>
-      <td><a href="report/<%=location.short_name%>/<%=@year%>"><%=location.name%></a></td>
+      <td><a href="report/<%=location.permalink%>/<%=@year%>"><%=location.name%></a></td>
       <% for i in 0..11 %>
         <td><%= value[i] != 0 ? value[i] : "" %></td>
       <% end %>
