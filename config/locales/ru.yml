@@ -23,6 +23,9 @@ ru:
   date:
     formats:
       long: '%d.%m.%Y'
+      month: '%B'
+    month_names: [~, Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]
+    
   report:
     not_found: Ничего не найдено
     distributor: Имя

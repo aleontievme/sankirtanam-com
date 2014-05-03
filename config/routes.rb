@@ -4,8 +4,10 @@ Sankirtanam::Application.routes.draw do
   
   scope "(:locale)", locale: /en|ru/ do
     root 'welcome#index'
-    get "report/:location/:year" => "report#show"
     
+    get "report/:location/:year/:month" => "report#show"
+    get "report/:location/:year" => "report#show"
+
     get "report" => 'report#index'
     get "welcome/index"
     get 'p' => 'welcome#process_emails'
