@@ -4,12 +4,15 @@ class ReportController < ApplicationController
   end
 
   def show
-    date_start = Time.strptime(params[:date_start], "%m/%d/%Y") rescue DateTime.new(1000, 1, 1)
-    date_end   = Time.strptime(params[:date_end], "%m/%d/%Y") rescue DateTime.new(3000, 1, 1)
+    year       = params[:year].to_i
+    date_begin = DateTime.new(year)
+    date_end   = DateTime.new(year, 12, 31)
+
+    location   = Location.find_by(short_name: params[:location]) 
 
   	@reports = Report.includes(:records)
-  	  .where(location_id: params[:location_id])
-  	  .where(:date => date_start..date_end)
+  	  .where(location_id: location.id)
+  	  .where(:date => date_begin..date_end)
       .order(:date)
   end
 end

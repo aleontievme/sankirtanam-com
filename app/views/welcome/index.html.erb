@@ -18,22 +18,13 @@
     <th>ИТОГ</th>
   </tr>
 
-  <% for location in @locations %>
+  <% @city_month_stat.each do |location, value| %>
     <tr>
-      <td><%=location.name%></td>
+      <td><a href="report/<%=location.short_name%>/<%=@year%>"><%=location.name%></a></td>
       <% for i in 0..11 %>
-        <% if @city_month_stat[location] == nil then %>
-          <td></td>
-        <% else %>
-          <td><%= @city_month_stat[location][i] %></td>
-        <% end %>
+        <td><%= value[i] != 0 ? value[i] : "" %></td>
       <% end %>
-      
-      <% if @city_month_stat[location] != nil then %>
-        <td><%=@city_month_stat[location][-1]%></td>
-      <% else %>
-        <td></td>
-      <% end %>
+      <td><%=value[-1]%></td>
     <tr>
   <% end %>
 </table>
@@ -70,5 +61,3 @@ $(function () {
 });
 </script
 
-
-<%= render partial: "report/form", :locals => {locations: @locations} %>
