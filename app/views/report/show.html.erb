@@ -6,6 +6,10 @@
   <% end %>
 
   <ul class="pagination">
+    <li><a href="/">Назад</a>
+  </ul>
+
+  <ul class="pagination">
     <% for report in @reports do %>
       <% if report.date.month == @month then %>
       <li class="active">
